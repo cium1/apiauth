@@ -10,7 +10,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "Cium1\\ApiAuth\\": "/"
+            "cium1\\apiauth\\": "/"
         }
     },
     "require": {

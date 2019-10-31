@@ -4,7 +4,7 @@
  * Email:   ye91@foxmail.com
  */
 
-namespace Cium1\ApiAuth\Exceptions;
+namespace cium1\apiauth\Exceptions;
 
 class AccessKeyException extends \Exception
 {

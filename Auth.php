@@ -4,13 +4,13 @@
  * Email:   ye91@foxmail.com
  */
 
-namespace Cium1\ApiAuth;
+namespace cium1\apiauth;
 
 
-use Cium1\ApiAuth\Exceptions\AccessKeyException;
-use Cium1\ApiAuth\Exceptions\InvalidTokenException;
-use Cium1\ApiAuth\Exceptions\SignatureMethodException;
-use Cium1\ApiAuth\Signatures\SignatureInterface;
+use cium1\apiauth\Exceptions\AccessKeyException;
+use cium1\apiauth\Exceptions\InvalidTokenException;
+use cium1\apiauth\Exceptions\SignatureMethodException;
+use cium1\apiauth\Signatures\SignatureInterface;
 
 
 /*
@@ -50,7 +50,7 @@ $.post('/api/example',{},requestConfig).then(res=>{
 /**
  * Class Auth
  *
- * @package Cium1\ApiAuth
+ * @package cium1\apiauth
  */
 class Auth
 {
