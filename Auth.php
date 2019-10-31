@@ -240,6 +240,7 @@ class Auth
      * @param string $url
      * @param string $token
      *
+     * @return bool
      * @throws AccessKeyException
      * @throws InvalidTokenException
      * @throws SignatureMethodException
@@ -254,8 +255,9 @@ class Auth
             list($header, $payload, $alg) = $this->parseParams($headerStr, $payloadStr);
             $role = $this->roles[$payload['access_key']];
             $this->signatureCheck($alg, "$headerStr.$payloadStr", $role['secret_key'], $signature);
-            //$this->bindParamsToRequest($request, $role['name'], $payload);
+            return $role['name'];
         }
+        return false;
     }
 
     /**
