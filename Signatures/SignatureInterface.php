@@ -4,7 +4,7 @@
  * Email:   ye91@foxmail.com
  */
 
-namespace cium1\apiauth\Signatures;
+namespace Cium1\ApiAuth\Signatures;
 
 interface SignatureInterface
 {

@@ -4,7 +4,7 @@
  * Email:   ye91@foxmail.com
  */
 
-namespace cium1\apiauth\Exceptions;
+namespace Cium1\ApiAuth\Exceptions;
 
 class InvalidTokenException extends \Exception
 {
