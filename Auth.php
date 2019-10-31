@@ -240,14 +240,13 @@ class Auth
      * @param string $url
      * @param string $token
      *
-     * @return bool
      * @throws AccessKeyException
      * @throws InvalidTokenException
      * @throws SignatureMethodException
      */
     public function check(string $url, string $token)
     {
-        if ($this->status == self::STATUS_ON && $this->isSkip($url)) {
+        if ($this->status == self::STATUS_ON && !$this->isSkip($url)) {
             if (mb_substr_count($token, '.') != 2) {
                 throw new InvalidTokenException("Token format error");
             }
@@ -257,7 +256,6 @@ class Auth
             $this->signatureCheck($alg, "$headerStr.$payloadStr", $role['secret_key'], $signature);
             //$this->bindParamsToRequest($request, $role['name'], $payload);
         }
-        return true;
     }
 
     /**
