@@ -1,0 +1,21 @@
+{
+    "name": "cium1/apiauth",
+    "license": "MIT",
+    "description": "API 鉴权包",
+    "authors": [
+        {
+            "name": "cium",
+            "email": "ye91@foxmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Cium1\\ApiAuth\\": "/"
+        }
+    },
+    "require": {
+        "php": ">=7.0.0",
+        "ext-mbstring": "*",
+        "ext-json": "*"
+    }
+}
