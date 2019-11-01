@@ -4,7 +4,7 @@
  * Email:   ye91@foxmail.com
  */
 
-namespace Cium1\ApiAuth;
+namespace Cium\ApiAuth;
 
 
 class Tool

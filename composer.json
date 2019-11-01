@@ -1,5 +1,5 @@
 {
-    "name": "cium1/apiauth",
+    "name": "cium/apiauth",
     "license": "MIT",
     "description": "API 鉴权包",
     "authors": [
@@ -10,7 +10,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "Cium1\\ApiAuth\\": "/"
+            "Cium\\ApiAuth\\": "/"
         }
     },
     "require": {

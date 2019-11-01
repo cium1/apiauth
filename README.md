@@ -9,7 +9,7 @@
 
 #### 安装教程
 
-1.  composer require cium1/apiauth
+1.  composer require cium/apiauth
 
 #### 使用说明
 

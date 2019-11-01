@@ -4,7 +4,7 @@
  * Email:   ye91@foxmail.com
  */
 
-namespace Cium1\ApiAuth\Signatures;
+namespace Cium\ApiAuth\Signatures;
 
 
 class Md5 implements SignatureInterface
