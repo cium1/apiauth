@@ -15,6 +15,33 @@
 
 ##### service
 ```
+    use Cium\ApiAuth\Auth;
+    use Cium\ApiAuth\Signatures\Md5;
+
+    $config = [
+          'status'            => Auth::STATUS_ON,
+          'roles'             => [
+              '9vOR0GSX5aszJDs3zHClnbH5w4yB2u9G' => [
+                  'name'       => 'test',
+                  'secret_key' => '8swzaObBtF0utwM19eoc3g2XezhRJgsu',
+              ],
+          ],
+          'signature_methods' => [
+              Md5::NAME => Md5::class,
+          ],
+          'skip'              => [
+              'is'   => [Auth::class, 'defaultSkipHandler'],
+              'urls' => [],
+          ],
+          'timeout'           => 0,
+      ];
+
+    try {
+        $auth = new Auth($config);
+        $roleName = $auth->check($url, $token);
+    } catch (\Exception $e) {
+        todo ...
+    }
 
 ```
 
