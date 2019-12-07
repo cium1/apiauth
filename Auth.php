@@ -27,6 +27,7 @@ const payload = Base64.encode(JSON.stringify({
                  "timestamp": timestamp,
                  "rand_str": rand_str,
                  "access_key": access_key
+                 "body": data,
              }));
 const signature_string = header  + '.' + payload;
 
@@ -34,11 +35,11 @@ function md5Sign(string, secret){
     return md5(string + secret);
 }
 
-const api_token = signature_string + '.' + md5Sign(signature_string,secret_key);
+const sign = signature_string + '.' + md5Sign(signature_string,secret_key);
 
 const requestConfig = {
     headers: {
-        "api-token": api_token
+        "api-sign": sign
     }
 };
 
@@ -239,21 +240,23 @@ class Auth
      *
      * @param string $url
      * @param string $token
+     * @param string $dataStr
      *
      * @return bool
      * @throws AccessKeyException
      * @throws InvalidTokenException
      * @throws SignatureMethodException
      */
-    public function check(string $url, string $token)
+    public function check(string $url, string $token, string $dataStr)
     {
         if ($this->status == self::STATUS_ON && !$this->isSkip($url)) {
             if (mb_substr_count($token, '.') != 2) {
-                throw new InvalidTokenException("Token format error");
+                throw new InvalidTokenException("Sign format error");
             }
             list($headerStr, $payloadStr, $signature) = explode(".", $token);
             list($header, $payload, $alg) = $this->parseParams($headerStr, $payloadStr);
             $role = $this->roles[$payload['access_key']];
+            $this->dataCheck($alg, $payload['data'], $dataStr);
             $this->signatureCheck($alg, "$headerStr.$payloadStr", $role['secret_key'], $signature);
             return $role['name'];
         }
@@ -313,12 +316,12 @@ class Auth
         $payload = json_decode(base64_decode($payloadStr), true);
 
         if (!is_array($header) || !isset($header['alg']) ||
-            !is_array($payload) || !isset($payload['timestamp']) || !isset($payload['rand_str']) || !isset($payload['access_key'])) {
-            throw new InvalidTokenException('Invalid token !');
+            !is_array($payload) || !isset($payload['timestamp']) || !isset($payload['rand_str']) || !isset($payload['access_key']) || !isset($payload['data'])) {
+            throw new InvalidTokenException('Invalid Sign !');
         }
 
         if ($this->timeout > 0 && $this->timeout < (time() - $payload['timestamp'])) {
-            throw new InvalidTokenException('Token has expired!');
+            throw new InvalidTokenException('Sign has expired!');
         }
 
         if (!isset($this->roles[$payload['access_key']])) {
@@ -345,6 +348,22 @@ class Auth
     }
 
     /**
+     * 数据效验
+     *
+     * @param SignatureInterface $alg
+     * @param string             $encryptStr
+     * @param string             $data
+     *
+     * @throws InvalidTokenException
+     */
+    private function dataCheck(SignatureInterface $alg, string $encryptStr, string $data)
+    {
+        if (!$alg::dataCheck($encryptStr, $data)) {
+            throw new InvalidTokenException('invalid Sign !');
+        }
+    }
+
+    /**
      * 签名校验
      *
      * @param SignatureInterface $alg
@@ -357,7 +376,7 @@ class Auth
     private function signatureCheck(SignatureInterface $alg, string $signatureStr, string $secret, string $signature)
     {
         if (!$alg::check($signatureStr, $secret, $signature)) {
-            throw new InvalidTokenException('invalid token !');
+            throw new InvalidTokenException('invalid Sign !');
         }
     }
 }

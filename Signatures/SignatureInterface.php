@@ -9,17 +9,24 @@ namespace Cium\ApiAuth\Signatures;
 interface SignatureInterface
 {
     /**
-     * 签名
+     * 签名加密
      *
      * @param string $string
      * @param string $secret
      *
      * @return string
      */
-    public static function sign(string $string, string $secret): string;
+    public static function signEncrypt(string $string, string $secret): string;
 
     /**
-     * 校验
+     * 数据加密
+     * @param string $string
+     * @return string
+     */
+    public static function dataEncrypt(string $string): string;
+
+    /**
+     * 签名校验
      *
      * @param string $string
      * @param string $secret
@@ -27,6 +34,14 @@ interface SignatureInterface
      *
      * @return bool
      */
-    public static function check(string $string, string $secret, string $signature): bool;
+    public static function signCheck(string $string, string $secret, string $signature): bool;
+
+    /**
+     * 数据校验
+     * @param string $encryptStr
+     * @param string $data
+     * @return bool
+     */
+    public static function dataCheck(string $encryptStr, string $data): bool;
 
 }
