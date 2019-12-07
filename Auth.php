@@ -375,7 +375,7 @@ class Auth
      */
     private function signatureCheck(SignatureInterface $alg, string $signatureStr, string $secret, string $signature)
     {
-        if (!$alg::check($signatureStr, $secret, $signature)) {
+        if (!$alg::signCheck($signatureStr, $secret, $signature)) {
             throw new InvalidTokenException('invalid Sign !');
         }
     }
