@@ -36,4 +36,20 @@ class Tool
         $secret_key = self::strRand();
         return compact('access_key', 'secret_key');
     }
+
+    static function hashArr(array $data)
+    {
+        $str = "";
+        ksort($data);
+        foreach ($data as $key => $value) {
+            if (is_array($value)) {
+                $str .= "$key=(" . self::hashArr($value) . ")&";
+            } else {
+                $str .= "$key=" . urlencode($value) . "&";
+            }
+        }
+        $str = substr($str, 0, -1);
+        return $str;
+    }
+
 }
